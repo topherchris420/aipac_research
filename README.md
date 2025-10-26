@@ -1,8 +1,9 @@
 
-# AIPAC Research Assistant
+# AI Research Assistant: AIPAC Focus
 
 An advanced, AI-powered research assistant that leverages the Google Gemini API with Google Search grounding to provide current, factual, and sourced answers. This implementation is specifically focused on providing information related to AIPAC.
 
+![AIPAC Research Assistant Screenshot](https://storage.googleapis.com/aistudio-o-images/project_screenshots/aipac-research-assistant.png)
 
 ## ✨ Features
 
@@ -39,7 +40,7 @@ This application is a single-page application built with **React** and **TypeScr
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/topherchris420/ai-research-assistant.git
+    git clone https://github.com/your-username/ai-research-assistant.git
     cd ai-research-assistant
     ```
 

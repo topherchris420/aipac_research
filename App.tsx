@@ -5,6 +5,8 @@ import LoadingSpinner from './components/LoadingSpinner';
 import SourceCard from './components/SourceCard';
 import LiveUpdateCard from './components/LiveUpdateCard';
 import { GenerateContentResponse } from '@google/genai';
+import { analyzeKeywords, KeywordData } from './utils/textUtils';
+import KeywordChart from './components/KeywordChart';
 
 const suggestedQueries = [
   { 
@@ -38,7 +40,11 @@ type ActionButtonProps = {
   disabled: boolean;
   children: React.ReactNode;
 };
-function ActionButton({ onClick, disabled, children }: ActionButtonProps) {
+// Fix: Refactored ActionButton to use a const arrow function with React.FC.
+// The previous function declaration might have caused a subtle type inference issue
+// with the TypeScript compiler, leading to false positive errors about missing 'children' props.
+// This more explicit and common pattern for defining components with TypeScript should resolve the issue.
+const ActionButton: React.FC<ActionButtonProps> = ({ onClick, disabled, children }) => {
   return (
     <button
       onClick={onClick}
@@ -61,6 +67,7 @@ const App: React.FC = () => {
   const [liveUpdates, setLiveUpdates] = useState<LiveUpdate[]>([]);
   const [isLoadingUpdates, setIsLoadingUpdates] = useState<boolean>(true);
   const [updatesError, setUpdatesError] = useState<string | null>(null);
+  const [keywordData, setKeywordData] = useState<KeywordData[]>([]);
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
@@ -164,6 +171,7 @@ const App: React.FC = () => {
     setError(null);
     setResponse(null);
     setSources([]);
+    setKeywordData([]);
     setSubmittedQuery(researchQuery);
 
     try {
@@ -173,6 +181,9 @@ const App: React.FC = () => {
       
       setResponse(textResponse);
       setSources(groundingChunks);
+      if (textResponse) {
+        setKeywordData(analyzeKeywords(textResponse));
+      }
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
@@ -198,6 +209,7 @@ const App: React.FC = () => {
     setError(null);
     setResponse(null);
     setSources([]);
+    setKeywordData([]);
     
     let followUpPrompt = '';
     if (action === 'refine') {
@@ -213,6 +225,9 @@ const App: React.FC = () => {
       setResponse(textResponse);
        // Keep original sources on follow-up, or add new ones if any
       setSources(groundingChunks.length > 0 ? groundingChunks : originalSources);
+      if (textResponse) {
+        setKeywordData(analyzeKeywords(textResponse));
+      }
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);
@@ -408,21 +423,18 @@ const App: React.FC = () => {
                     {renderResponse(response)}
                   </div>
                   <div className="mt-8 flex flex-wrap items-center justify-start gap-3">
-                    {/* FIX: Use correct camelCase for SVG attributes ('strokeLinecap', 'strokeLinejoin') to fix JSX parsing and resolve missing 'children' prop error. */}
                     <ActionButton onClick={() => handleFollowUp('refine')} disabled={isLoading}>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                       </svg>
                       <span>Refine</span>
                     </ActionButton>
-                    {/* FIX: Use correct camelCase for SVG attributes ('strokeLinecap', 'strokeLinejoin') to fix JSX parsing and resolve missing 'children' prop error. */}
                     <ActionButton onClick={() => handleFollowUp('summarize')} disabled={isLoading}>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
                       </svg>
                       <span>Summarize</span>
                     </ActionButton>
-                    {/* FIX: Use correct camelCase for SVG attributes ('strokeLinecap', 'strokeLinejoin') to fix JSX parsing and resolve missing 'children' prop error. */}
                     <ActionButton onClick={handleShare} disabled={isLoading || shareFeedback !== 'Share'}>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.368a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
@@ -430,6 +442,13 @@ const App: React.FC = () => {
                       <span>{shareFeedback}</span>
                     </ActionButton>
                   </div>
+                </div>
+              )}
+              
+              {keywordData.length > 0 && (
+                <div>
+                  <h2 className="text-3xl font-serif font-bold mb-6 text-black">Keyword Frequency</h2>
+                  <KeywordChart data={keywordData} theme={theme as 'light' | 'dark'} />
                 </div>
               )}
 
