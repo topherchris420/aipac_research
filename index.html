@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Research Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              'brand-blue': '#3b82f6',
+              'brand-dark': '#0f172a',
+              'brand-light': '#f1f5f9',
+            }
+          },
+        },
+      }
+    </script>
+    <script type="importmap">
+      {
+        "imports": {
+          "react/": "https://aistudiocdn.com/react@^19.2.0/",
+          "react": "https://aistudiocdn.com/react@^19.2.0",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+          "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0"
+        }
+      }
+    </script>
+    <style>
+      .bg-aurora {
+        background-color: #020617;
+        background-image: radial-gradient(ellipse at 50% 0%, rgba(17, 94, 89, 0.2), transparent 70%);
+      }
+      .dark .bg-aurora {
+        background-color: #020617;
+        background-image: radial-gradient(ellipse at 50% 0%, rgba(17, 94, 89, 0.3), transparent 70%);
+      }
+       .bg-aurora-light {
+        background-color: #f8fafc;
+        background-image: radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.1), transparent 70%);
+      }
+    </style>
+  </head>
+  <body class="bg-aurora-light dark:bg-aurora transition-colors duration-500">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

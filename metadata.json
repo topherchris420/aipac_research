@@ -1,0 +1,7 @@
+{
+  "name": "AIPAC Research",
+  "description": "An AI-powered research assistant that uses Google Search grounding to provide up-to-date and accurate information on any topic.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
