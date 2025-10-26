@@ -52,7 +52,10 @@ This application is a single-page application built with **React** and **TypeScr
     API_KEY=YOUR_GOOGLE_API_KEY_HERE
     ```
 
-3.  **Run the application:**
+3.  **Deployment:**
+    To deploy this project, you will need to set the `GEMINI_API_KEY` environment variable in your deployment platform (e.g., Vercel, Netlify, GitHub Pages).
+
+4.  **Run the application:**
     Since the project uses ES modules and an `importmap`, you can run it with a simple local server.
     ```bash
     # If you have npm/npx installed
