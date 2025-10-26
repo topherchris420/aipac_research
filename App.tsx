@@ -75,6 +75,7 @@ const App: React.FC = () => {
     }
     return 'dark';
   });
+  const apiKey = process.env.GEMINI_API_KEY;
 
   const [isListening, setIsListening] = useState<boolean>(false);
   const recognitionRef = useRef<any | null>(null);
@@ -314,6 +315,15 @@ const App: React.FC = () => {
             Leverage AI grounded in Google Search for current, factual, and sourced answers.
           </p>
         </header>
+
+        {!apiKey && (
+          <div className="max-w-3xl mx-auto mb-8">
+            <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg backdrop-blur-sm" role="alert">
+              <strong className="font-bold">Configuration Error: </strong>
+              <span className="block sm:inline">The `GEMINI_API_KEY` is not set. Please add it to your environment variables to enable the application's features.</span>
+            </div>
+          </div>
+        )}
 
         <div className="max-w-3xl mx-auto">
           <div className="relative">
