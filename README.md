@@ -55,6 +55,17 @@ This application is a single-page application built with **React** and **TypeScr
 3.  **Deployment:**
     To deploy this project, you will need to set the `GEMINI_API_KEY` environment variable in your deployment platform (e.g., Vercel, Netlify, GitHub Pages).
 
+    **GitHub Pages Deployment**
+
+    1.  **Set the `homepage` in `package.json`:**
+        Open `package.json` and add a `homepage` field with the URL of your GitHub Pages site. For example:
+        `"homepage": "https://<YOUR_USERNAME>.github.io/aipac-research/"`
+    2.  **Deploy:**
+        Run the `deploy` script to build and deploy the application to GitHub Pages:
+        `npm run deploy`
+    3.  **Configure GitHub Pages:**
+        In your GitHub repository settings, under "Pages," ensure that the source is set to the `gh-pages` branch.
+
 4.  **Run the application:**
     Since the project uses ES modules and an `importmap`, you can run it with a simple local server.
     ```bash
