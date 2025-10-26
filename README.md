@@ -38,7 +38,7 @@ This application is a single-page application built with **React** and **TypeScr
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/ai-research-assistant.git
+    git clone https://github.com/topherchris420/aipac_research.git
     cd ai-research-assistant
     ```
 
