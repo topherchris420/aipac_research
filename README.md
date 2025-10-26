@@ -57,13 +57,10 @@ This application is a single-page application built with **React** and **TypeScr
 
     **GitHub Pages Deployment**
 
-    1.  **Set the `homepage` in `package.json`:**
-        Open `package.json` and add a `homepage` field with the URL of your GitHub Pages site. For example:
-        `"homepage": "https://<YOUR_USERNAME>.github.io/aipac-research/"`
-    2.  **Deploy:**
+    1.  **Deploy:**
         Run the `deploy` script to build and deploy the application to GitHub Pages:
         `npm run deploy`
-    3.  **Configure GitHub Pages:**
+    2.  **Configure GitHub Pages:**
         In your GitHub repository settings, under "Pages," ensure that the source is set to the `gh-pages` branch.
 
 4.  **Run the application:**
